@@ -1,45 +1,68 @@
-const tabela = document.querySelector("#tabelaConsultas tbody");
+document.addEventListener("DOMContentLoaded", function () {
+    const tabelaConsultas = document.getElementById("tabela-consultas");
 
-function carregarConsultas() {
-    fetch("/consultas")
-        .then(res => res.json())
-        .then(consultas => {
-            tabela.innerHTML = "";
-            consultas.forEach(c => {
-                const row = tabela.insertRow();
-                row.innerHTML = `
-                    <td>${c.id}</td>
-                    <td>${c.dataHora.replace("T", " ")}</td>
-                    <td>${c.status}</td>
-                    <td>${c.medicoId}</td>
-                    <td>${c.pacienteId}</td>
-                    <td class="acoes">
-                        <button class="realizar" onclick="alterarStatus(${c.id}, 'realizar')">Concluir</button>
-                        <button class="cancelar" onclick="alterarStatus(${c.id}, 'cancelar')">Cancelar</button>
-                    </td>
-                `;
+    function carregarConsultas() {
+        fetch("http://localhost:8082/consultas")
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error("Erro ao carregar consultas.");
+                }
+                return res.json();
+            })
+            .then(data => {
+                tabelaConsultas.innerHTML = "";
+                data.forEach(consulta => {
+                    const tr = document.createElement("tr");
+
+                    const dataHoraFormatada = new Date(consulta.dataHora).toLocaleString("pt-BR");
+
+                    tr.innerHTML = `
+                        <td>${consulta.id}</td>
+                        <td>${dataHoraFormatada}</td>
+                        <td>${consulta.medicoId}</td>
+                        <td>${consulta.pacienteId}</td>
+                        <td>${consulta.status}</td>
+                        <td>
+                            <button onclick="cancelarConsulta(${consulta.id})">Cancelar</button>
+                            <button onclick="realizarConsulta(${consulta.id})">Concluir</button>
+                        </td>
+                    `;
+                    tabelaConsultas.appendChild(tr);
+                });
+            })
+            .catch(error => {
+                console.error(error);
+                alert("Erro ao carregar consultas.");
             });
-        })
-        .catch(() => {
-            alert("Erro ao carregar consultas.");
-        });
-}
+    }
 
-function alterarStatus(id, acao) {
-    fetch(`/consultas/${id}/${acao}`, {
-        method: "PUT"
-    })
-    .then(response => {
-        if (!response.ok) throw new Error("Erro ao atualizar status.");
-        return response.text();
-    })
-    .then(() => {
-        alert("Status atualizado com sucesso!");
-        carregarConsultas();
-    })
-    .catch(error => {
-        alert(error.message);
-    });
-}
+    window.cancelarConsulta = function (id) {
+        fetch(`http://localhost:8082/consultas/${id}/cancelar`, { method: "PUT" })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error("Erro ao cancelar consulta.");
+                }
+                carregarConsultas();
+            })
+            .catch(error => {
+                console.error(error);
+                alert("Erro ao cancelar consulta.");
+            });
+    };
 
-carregarConsultas();
+    window.realizarConsulta = function (id) {
+        fetch(`http://localhost:8082/consultas/${id}/realizar`, { method: "PUT" })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error("Erro ao concluir consulta.");
+                }
+                carregarConsultas();
+            })
+            .catch(error => {
+                console.error(error);
+                alert("Erro ao concluir consulta.");
+            });
+    };
+
+    carregarConsultas();
+});

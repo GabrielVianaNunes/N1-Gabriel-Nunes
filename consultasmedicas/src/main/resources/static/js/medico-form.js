@@ -1,31 +1,34 @@
-document.getElementById("medicoForm").addEventListener("submit", function (e) {
-    e.preventDefault();
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("medicoForm");
 
-    const medico = {
-        nome: document.getElementById("nome").value,
-        especialidade: document.getElementById("especialidade").value,
-        crm: document.getElementById("crm").value
-    };
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
 
-    fetch("/medicos", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(medico)
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error("Erro ao cadastrar médico");
+        const nome = document.getElementById("nome").value.trim();
+        const crm = document.getElementById("crm").value.trim();
+        const especialidade = document.getElementById("especialidade").value.trim();
+
+        const medico = { nome, crm, especialidade };
+
+        try {
+            const response = await fetch("/medicos", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(medico)
+            });
+
+            if (!response.ok) {
+                const erro = await response.text();
+                throw new Error(`Erro ao cadastrar médico: ${erro}`);
+            }
+
+            alert("Médico cadastrado com sucesso!");
+            form.reset();
+        } catch (error) {
+            console.error("Erro:", error);
+            alert("Erro ao cadastrar médico.");
         }
-    })
-    .then(data => {
-        document.getElementById("mensagem").textContent = "Médico cadastrado com sucesso!";
-        document.getElementById("medicoForm").reset();
-    })
-    .catch(error => {
-        document.getElementById("mensagem").textContent = error.message;
     });
 });

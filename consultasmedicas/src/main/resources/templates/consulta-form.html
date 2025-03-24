@@ -9,9 +9,19 @@
     <div class="container">
         <h1>Agendar Consulta</h1>
         <form id="consultaForm">
-            <label>Data e Hora: <input type="datetime-local" name="dataHora" required></label><br>
-            <label>ID do Médico: <input type="number" name="medicoId" required></label><br>
-            <label>ID do Paciente: <input type="number" name="pacienteId" required></label><br>
+            <label for="dataHora">Data e Hora:</label>
+            <input type="datetime-local" id="dataHora" name="dataHora" required><br>
+
+            <label for="medicoId">Médico:</label>
+            <select id="medicoId" name="medicoId" required>
+                <option value="">Selecione um médico</option>
+            </select><br>
+
+            <label for="pacienteId">Paciente:</label>
+            <select id="pacienteId" name="pacienteId" required>
+                <option value="">Selecione um paciente</option>
+            </select><br>
+
             <button type="submit">Agendar</button>
         </form>
         <a class="back-button" href="/">Voltar para Home</a>

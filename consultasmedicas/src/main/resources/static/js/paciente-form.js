@@ -1,32 +1,35 @@
-document.getElementById("pacienteForm").addEventListener("submit", function (e) {
-    e.preventDefault();
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("pacienteForm");
 
-    const paciente = {
-        nome: document.getElementById("nome").value,
-        cpf: document.getElementById("cpf").value,
-        dataNascimento: document.getElementById("dataNascimento").value,
-        telefone: document.getElementById("telefone").value
-    };
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
 
-    fetch("/pacientes", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(paciente)
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error("Erro ao cadastrar paciente");
+        const nome = document.getElementById("nome").value.trim();
+        const cpf = document.getElementById("cpf").value.trim();
+        const dataNascimento = document.getElementById("dataNascimento").value;
+        const telefone = document.getElementById("telefone").value.trim();
+
+        const paciente = { nome, cpf, dataNascimento, telefone };
+
+        try {
+            const response = await fetch("/pacientes", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(paciente)
+            });
+
+            if (!response.ok) {
+                const erro = await response.text();
+                throw new Error(`Erro ao cadastrar paciente: ${erro}`);
+            }
+
+            alert("Paciente cadastrado com sucesso!");
+            form.reset();
+        } catch (error) {
+            console.error("Erro:", error);
+            alert("Erro ao cadastrar paciente.");
         }
-    })
-    .then(data => {
-        document.getElementById("mensagem").textContent = "Paciente cadastrado com sucesso!";
-        document.getElementById("pacienteForm").reset();
-    })
-    .catch(error => {
-        document.getElementById("mensagem").textContent = error.message;
     });
 });
