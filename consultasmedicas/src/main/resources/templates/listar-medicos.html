@@ -2,27 +2,24 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Médicos</title>
+    <title>Listar Médicos</title>
     <link rel="stylesheet" href="/css/main-style.css">
 </head>
 <body>
     <div class="container">
         <h1>Lista de Médicos</h1>
-        <table id="tabelaMedicos">
+        <table id="medicosTable" border="1">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>
-                    <th>Especialidade</th>
                     <th>CRM</th>
+                    <th>Especialidade</th>
                 </tr>
             </thead>
             <tbody></tbody>
         </table>
-
-        <div style="text-align: center;">
-            <a href="/home.html" class="button-link">⬅ Voltar para Home</a>
-        </div>
+        <a class="back-button" href="/">Voltar para Home</a>
     </div>
     <script src="/js/listar-medicos.js"></script>
 </body>

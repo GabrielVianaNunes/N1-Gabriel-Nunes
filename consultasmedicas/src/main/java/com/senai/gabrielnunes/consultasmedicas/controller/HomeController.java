@@ -8,7 +8,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String redirecionarParaHome() {
-        return "home"; // Vai carregar "home.html" da pasta templates
+        return "home";
     }
 
     @GetMapping("/home")
@@ -16,6 +16,7 @@ public class HomeController {
         return "home";
     }
 
+    // ✅ Rotas para páginas HTML
     @GetMapping("/paciente-form")
     public String pacienteForm() {
         return "paciente-form";
@@ -42,7 +43,7 @@ public class HomeController {
     }
 
     @GetMapping("/consultas-gerenciar")
-    public String gerenciarConsultas() {
+    public String consultasGerenciar() {
         return "consultas-gerenciar";
     }
 }

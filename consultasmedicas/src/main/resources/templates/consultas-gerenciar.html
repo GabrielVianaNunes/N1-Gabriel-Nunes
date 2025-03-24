@@ -4,31 +4,11 @@
     <meta charset="UTF-8">
     <title>Gerenciar Consultas</title>
     <link rel="stylesheet" href="/css/main-style.css">
-    <style>
-        .acoes button {
-            margin: 0 5px;
-            padding: 6px 10px;
-            border: none;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .realizar {
-            background-color: #28a745;
-            color: white;
-        }
-
-        .cancelar {
-            background-color: #dc3545;
-            color: white;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Consultas Agendadas</h1>
-        <table id="tabelaConsultas">
+        <h1>Gerenciar Consultas</h1>
+        <table id="consultasTable" border="1">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -41,12 +21,8 @@
             </thead>
             <tbody></tbody>
         </table>
-
-        <div style="text-align: center;">
-            <a href="/home.html" class="button-link">⬅ Voltar para Home</a>
-        </div>
+        <a class="back-button" href="/">Voltar para Home</a>
     </div>
-
     <script src="/js/consultas-gerenciar.js"></script>
 </body>
 </html>

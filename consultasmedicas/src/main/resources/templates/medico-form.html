@@ -2,33 +2,20 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Cadastro de Médico</title>
+    <title>Cadastrar Médico</title>
     <link rel="stylesheet" href="/css/main-style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Cadastro de Médico</h1>
-
+        <h1>Cadastrar Médico</h1>
         <form id="medicoForm">
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" required>
-
-            <label for="especialidade">Especialidade:</label>
-            <input type="text" id="especialidade" required>
-
-            <label for="crm">CRM:</label>
-            <input type="text" id="crm" required>
-
-            <button type="submit">Cadastrar</button>
+            <label>Nome: <input type="text" name="nome" required></label><br>
+            <label>CRM: <input type="text" name="crm" required></label><br>
+            <label>Especialidade: <input type="text" name="especialidade" required></label><br>
+            <button type="submit">Salvar</button>
         </form>
-
-        <div id="mensagem" class="mensagem"></div>
-
-        <div style="text-align: center;">
-            <a href="/home.html" class="button-link">⬅ Voltar para Home</a>
-        </div>
+        <a class="back-button" href="/">Voltar para Home</a>
     </div>
-
     <script src="/js/medico-form.js"></script>
 </body>
 </html>
