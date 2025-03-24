@@ -1,11 +1,25 @@
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("medicoForm");
 
+    const crmInput = document.getElementById("crm");
+
+    // Máscara para CRM: 123456-SP
+    crmInput.addEventListener("input", () => {
+        let value = crmInput.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+        if (value.length > 9) value = value.slice(0, 9); // limita tamanho
+
+        if (value.length > 6) {
+            value = value.slice(0, 6) + "-" + value.slice(6);
+        }
+
+        crmInput.value = value;
+    });
+
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         const nome = document.getElementById("nome").value.trim();
-        const crm = document.getElementById("crm").value.trim();
+        const crm = crmInput.value.trim();
         const especialidade = document.getElementById("especialidade").value.trim();
 
         const medico = { nome, crm, especialidade };

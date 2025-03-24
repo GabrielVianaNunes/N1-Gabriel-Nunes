@@ -2,6 +2,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("consultaForm");
     const medicoSelect = document.getElementById("medicoId");
     const pacienteSelect = document.getElementById("pacienteId");
+    const dataHoraInput = document.getElementById("dataHora");
+
+    // 🔒 Definir data mínima como hoje no datetime-local
+    const now = new Date();
+    const pad = n => n.toString().padStart(2, "0");
+    const formattedNow = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+    dataHoraInput.min = formattedNow;
 
     // Carregar médicos no select
     fetch("/medicos")
@@ -39,9 +46,14 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
-        const dataHora = document.getElementById("dataHora").value;
+        const dataHora = dataHoraInput.value;
         const medicoId = medicoSelect.value;
         const pacienteId = pacienteSelect.value;
+
+        if (dataHora < dataHoraInput.min) {
+            alert("A data da consulta deve ser a partir do horário atual.");
+            return;
+        }
 
         const consulta = {
             dataHora,
