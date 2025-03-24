@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Agendamento de Consulta</title>
+    <link rel="stylesheet" href="/css/main-style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Agendar Consulta</h1>
+
+        <form id="consultaForm">
+            <label for="medicoId">ID do Médico:</label>
+            <input type="number" id="medicoId" required>
+
+            <label for="pacienteId">ID do Paciente:</label>
+            <input type="number" id="pacienteId" required>
+
+            <label for="dataHora">Data e Hora:</label>
+            <input type="datetime-local" id="dataHora" required>
+
+            <button type="submit">Agendar</button>
+        </form>
+
+        <div id="mensagem" class="mensagem"></div>
+
+        <div style="text-align: center;">
+            <a href="/home.html" class="button-link">⬅ Voltar para Home</a>
+        </div>
+    </div>
+
+    <script src="/js/consulta-form.js"></script>
+</body>
+</html>
